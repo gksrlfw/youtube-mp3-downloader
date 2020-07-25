@@ -1,0 +1,25 @@
+{
+  "name": "youtube",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.2.0",
+    "axios": "^0.19.2",
+    "electron": "^9.1.1",
+    "ffmetadata": "^1.6.0",
+    "ffmpeg-static": "^4.2.6",
+    "fluent-ffmpeg": "^2.1.2",
+    "fs": "0.0.1-security",
+    "node-id3": "^0.1.17",
+    "puppeteer": "^5.2.1",
+    "request": "^2.88.2",
+    "util": "^0.12.3",
+    "ytdl-core": "^3.1.2"
+  }
+}

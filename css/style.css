@@ -1,0 +1,47 @@
+body {
+    font-family: Georgia, "Times New Roman", serif;  font-weight: 300;
+
+    margin-left: 50px;
+}
+#url {
+    margin-left: 50px;
+}
+#title {
+    margin-left: 37px;
+}
+#artist {
+    margin-left: 23px;
+}
+#album {
+    margin-left: 23px;
+}
+#image {
+    margin-left: 23px;
+}
+#lyric {
+    margin-left: 23px;
+}
+
+.url {
+    margin-bottom: 25px;
+}
+.title {
+    margin-bottom: 25px;
+}
+.artist {
+    margin-bottom: 25px;
+
+}
+
+.album {
+    margin-bottom: 25px;
+
+}
+.image {
+    margin-bottom: 25px;
+
+}
+.lyric {
+    margin-bottom: 25px;
+
+}
