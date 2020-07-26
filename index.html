@@ -4,24 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
-    <h1>YOUTUBE AUDIO DOWNLOADER</h1>
     <section id="USER_INPUT">
-
-        <form action="">
-            <div class="url">URL<input type="text" id="url"></div>
-            <div class="title">TITLE<input type="text" id="title"></div>
-            <div class="artist">ARTIST<input type="text" id="artist"></div>
-            <div class="album">ALBUM<input type="text" id="album"></div>
-            <div class="image">IMAGE<input type="text" id="image"></div></div>
-            <div class="lyric">LYRIC<input type="text" id="lyric"></div></div>
-            <input type="submit" value="Convert" id="convert">
+        <h1>YOUTUBE DOWNLOADER</h1>
+        <input type='checkbox' id='form-switch'>
+        <form id='login-form' action="" method='post'>
+            <input id="url" type="text" placeholder="YOUTUBE VIDEO URL">
+            <input id="title" type="text" placeholder="TITLE" >
+            <input id="artist" type="text" placeholder="ARTIST" >
+            <input id="album" type="text" placeholder="ALBUM TITLE" >
+            <input id="genre" type="text" placeholder="GENRE" >
+            <input id="image" type="text" placeholder="IMAGE URL" >
+            <textarea id="lyric" class="lyrics" type="text" placeholder="LYRICS" ></textarea>
+            <div id="btn_group">
+                <button id="convert" type='submit' class="btn">CONVERT</button>
+                <button id="reset" type='submit' class="btn">RESET</button>
+                <label for='form-switch'><div class="label">FIND LYRICS</div></label>
+            </div>
+            
+            <div class="print_log">LOADING</div>
+            <fieldset id="print_log">
+                <!-- <legend>LOADING</legend> -->
+                <!-- <div id="print_log"></div> -->
+            </fieldset>
+            
         </form>
-    </section>
-    
-    
+        <form id='register-form' action="" method='post'>
+            <input id="title" type="text" placeholder="TITLE" required>
+            <input id="artist" type="text" placeholder="ARTIST" required>
+            <div id="btn_group" style="margin-bottom: 5px">
+                <button id="find_lyrics" type='submit' class="btn">Find Lyrics</button>
+                <label for='form-switch'><div class="label">BACK</div></label>
+            </div>
+            <textarea class="lyrics" id="lyric" type="text" placeholder="Lyric what you want to set" required></textarea>
+        </form>
+    </section> 
 </body>
 <script src="./js/index.js"></script>
 </html>

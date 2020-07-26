@@ -1,47 +1,98 @@
-body {
-    font-family: Georgia, "Times New Roman", serif;  font-weight: 300;
-
-    margin-left: 50px;
-}
-#url {
-    margin-left: 50px;
-}
-#title {
-    margin-left: 37px;
-}
-#artist {
-    margin-left: 23px;
-}
-#album {
-    margin-left: 23px;
-}
-#image {
-    margin-left: 23px;
-}
-#lyric {
-    margin-left: 23px;
+* {
+  font-family: 'Jua', sans-serif;
+  font-size:14px;
+  box-sizing: border-box;
 }
 
-.url {
-    margin-bottom: 25px;
+h1 {
+  font-size: 30px;
+  margin: 0 auto;
+  width: 500px;
+  padding: 20px;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 15px;
+  /* margin-left: 300px; */
 }
-.title {
-    margin-bottom: 25px;
+fieldset {
+  width: 500px;
+  height: 200px;
+  overflow: auto;
+  padding: 10px;
+  text-align: center;
 }
-.artist {
-    margin-bottom: 25px;
+legend {
+  text-align: center;
+  padding: 10px;
+}
+form {
+    margin:0 auto;
+    width:500px;
+  }
+  input {
+    margin-bottom:5px;
+    padding:10px;
+    width: 100%;
+    border:1px solid #CCC
+  }
+  button {
+    padding:10px
+  }
+  label {
+    cursor:pointer
+  }
+  #form-switch {
+    display:none
+  }
+  #register-form {
+    display:none
+  }
+  #form-switch:checked~#register-form {
+    display:block
+  }
+  #form-switch:checked~#login-form {
+    display:none
+  }
+  .lyrics{
+    width: 500px; 
+    height: 200px;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .label {
+    display: inline;
+    font-size: 13.333px;
+    border: 1px solid grey;
+    background-color: rgba(0,0,0,0);
+    color: grey;
+    padding: 10px;
+    border-radius: 5px;
+    float: right;
+  }
+  .print_log{
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    background: grey;
+    padding: 10px;
+    width: 500px;
+  }
 
+
+.btn{ 
+  border-radius: 5px; 
+  /* border-bottom-left-radius: 5px;  */
+  margin-right:-4px; 
+  padding: 10px;
+}
+#btn_group button{ 
+  border: 1px solid grey; 
+  background-color: rgba(0,0,0,0); 
+  color: grey; padding: 10px; 
 }
 
-.album {
-    margin-bottom: 25px;
+#btn_group button:hover{ color:white; background-color: grey; }
 
-}
-.image {
-    margin-bottom: 25px;
 
-}
-.lyric {
-    margin-bottom: 25px;
 
-}

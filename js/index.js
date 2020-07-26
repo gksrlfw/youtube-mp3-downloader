@@ -1,101 +1,112 @@
 const fs = require('fs');
-const util = require('util');
-const async = require('async');
 
-const downloader = require('./js/downloader');
+let percent = require('./js/downloader').per;
+const downloader = require('./js/downloader').crawler;
 const changeMetadata = require('./js/controlMetadata');
 const imageDownloader = require('./js/imageDownloader');
+const lyricsCrawler = require('./js/lyricsCrawler');
+const printLog = require('./js/printLog.js');
 
-
-
-checkCreateFolder();
 
 let convert = document.querySelector('#convert');
-convert.addEventListener('click', async (e) => {
-    e.preventDefault();
-    let url = document.querySelector('#url');
-    let artist = document.querySelector('#artist');
-    let title =  document.querySelector('#title');
-    let album =  document.querySelector('#album');
-    let image =  document.querySelector('#image');
-    let lyric =  document.querySelector('#lyric');
+let findLyrics = document.querySelector('#find_lyrics');
+let reset = document.querySelector('#reset');
+let checkExecute = false;
+checkCreateFolder();
 
-    url.value = 'https://www.youtube.com/watch?v=B9kmcigMv-M&list=RDB9kmcigMv-M&start_radio=1&t=0';
-    artist.value = 'Wildson';
-    title.value = 'I Am Better Off';
-    album.value = 'none';
-    image.value = 'https://i.ytimg.com/vi/B9kmcigMv-M/hqdefault.jpg';
-    lyric.value = `When I think about the way we used to be
-    When I think about the things you took from me
-    I know that I am so much better
-    Better off
-    When I look at what I've done, now that we're apart
-    When I look at what I've won, I've come so far
-    I know I'm so much better off and baby you don't belong
-    I could feel it in my bones
-    There was something going on
-    That shade of doubt
-    Hangin' round
-    Got old
-    'Cause darling there is nothing right
-    When all you seem to do is lie
-    Those days are gone
-    I'm walking tall
-    While you're alone
-    When I think about the way we used to be
-    When I think about the things you took from me
-    I know that I am so much better
-    Better off
-    When I look at what I've done, now that we're apart
-    When I look at what I've won, I've come so far
-    I know I'm so much better off and baby you don't belong
-    Your love was cold
-    Heart made of stone
-    But I'm just fine
-    I'm gonna shine
-    I'm alright, alright, alright
-    I'm celebrating
-    My liberation
-    I'm moving strong
-    I'm moving on
-    I'm alright, alright, alright
-    Might be shaken, but not stirred
-    Just a lesson that I've learned
-    And so it goes tables turn, and you're on your own
-    When I think about the way
-    When I think about the way we used to be
-    When I think about the things you took from me
-    I know that I am so much better
-    Better off
-    When I look at what I've done, now that we're apart
-    When I look at what I've won, I've come so far
-    I know I'm so much better off and baby you don't belong
-    When I think about the way, when I think about the way we used to be
-    When I think about the things you took from me
-    I know that I'm so much better
-    Better off
-    When I look at what I've done, now that we're apart
-    When I look at what I've won, I've come so far
-    I know I'm so much better off and baby you don't belong`
-    
-      
-    await downloader(url.value, title.value).then((result) => {
-      console.log(result);
-    })
-    // downloader가 완료된 후에 실행되어야 한다
-    changeMetadata(`./audio/${title.value}.mp3`, title.value, artist.value, album.value, lyric.value);
-    imageDownloader(image.value, `./image/${title.value}.jpg`);
-    
-    // url.value = '';
-    // artist.value = '';
-    // title.value = '';
-    // album.value = '';
-    // image.value = '';
-    // lyric.value = '';
-    // url.focus();
-
+// reset
+reset.addEventListener('click', (e) => {
+  location.reload();
+  console.log(percent);
+  console.log('Comp');
 });
 
+// find Lyrics
+findLyrics.addEventListener('click', async (e) => {
+    e.preventDefault();
+    let artist = document.querySelector('#artist');
+    let title =  document.querySelector('#title');
+    let lyric =  document.querySelector('#lyric');
+    lyric.value = await lyricsCrawler(title.value, artist.value);
+});
+
+
+// mp4 to mp3
+convert.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if(checkExecute) return alert('Plz retry when prev file finished.');
+    checkExecute = true;
+    let urlTag = document.querySelector('#url');
+    let titleTag =  document.querySelector('#title');
+    let artistTag = document.querySelector('#artist');
+    let albumTag =  document.querySelector('#album');
+    let imageTag =  document.querySelector('#image');
+    let lyricTag =  document.querySelector('#lyric');
+    let genreTag =  document.querySelector('#genre');
+
+    let url = urlTag.value;
+    let artist = artistTag.value || new Date().toISOString();
+    let title = titleTag.value;
+    let image = imageTag.value || 'DO NOT ADD';
+    let album = albumTag.value || new Date().toISOString();
+    let lyric = lyricTag.value || 'ADD LYRICS';
+    let genre = genreTag.value || '';
+    // 입력창 초기화
+    urlTag.value = '';
+    artistTag.value = '';
+    titleTag.value = '';
+    albumTag.value = '';
+    imageTag.value = '';
+    lyricTag.value = '';
+    genreTag.value = '';
+    urlTag.focus();
+    let percentLength = 0;
+    let cnt = -1;
+
+    // todo: 비동기 처리
+    // 동기로 하는 방법 뒤져도 모르겠음...
+    if(!downloader(url, title) !== 'error') {
+    if(image !== 'DO NOT ADD') imageDownloader(image, `./image/${title}.jpg`);
+    let check = setInterval(() => {
+        if(cnt>=3 && percent.length === percentLength) {
+          deleteFile('video', title, 'mp4');
+          // deleteFile('audio', title, 'mp3');
+          // deleteFile('image', title, 'jpg');
+          //location.reload();
+          checkExecute = false;
+          clearInterval(check);
+          return alert('에러가 발생했어염!! 껏다 키는게 정신건강에 이롭습니당~');
+        }
+        else {
+          console.log('per: ', percent);
+          printLog(percent.slice(percentLength, percent.length), title, artist, ++cnt); 
+          percentLength = percent.length;
+          if(Number(percent[percentLength-1])>=99) {
+            percentLength = 0;
+            cnt = -1;
+            percent.push(' ');
+            checkExecute = false;
+            if(image !== 'DO NOT ADD') changeMetadata(`./audio/${title}.mp3`, title, artist, album, lyric, `./image/${title}.jpg`, genre);
+            else changeMetadata(`./audio/${title}.mp3`, title, artist, album, lyric, '');     
+            printLog(percent.slice(length, percent.length), title, artist, cnt); 
+            deleteFile('video', title, 'mp4');
+            //deleteFile('image', title, 'jpg');
+            return clearInterval(check);
+          }
+        }
+    }, 2000);
+  }
+});
+
+
+
+// delete file
+function deleteFile(folder, title, extension) {
+  fs.unlinkSync(`./${folder}/${title}.${extension}`, (err) => {
+    if(err) console.error(err);
+    else console.log(`done unliked ./${folder}/${title}.${extension}`);
+  });
+}
 
 // check folder
 function checkCreateFolder () {
@@ -120,5 +131,3 @@ function checkCreateFolder () {
     }
   });
 }
-
-

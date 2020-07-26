@@ -2,88 +2,61 @@ const ytdl = require('ytdl-core');
 const fs = require('fs');
 const ffmpeg = require('fluent-ffmpeg');
 const ffmpegPaths = require('ffmpeg-static');
+
 ffmpeg.setFfmpegPath(ffmpegPaths);
 
-
-const crawler = (url ,title) => {
-  return new Promise( (resolve, reject) => {
+var per = [];
+// todo: 비동기 처리
+const crawler = async (url ,title) => {
+    // per = [];
+    console.log('downloaer 실행')
     ytdl(url).pipe(fs.createWriteStream(`./video/${title}.mp4`));
     ffmpeg(`./video/${title}.mp4`)
     .toFormat('mp3')
     .on('progress', (progress) => {
       console.log('Processing: '+progress.percent+'% done');
+      if(progress.percent)
+      per.push(progress.percent);
     })
     .on('end', () => {
-      resolve('on Done');
-      // console.log('Completed');
+      console.log('Done');
     })
     .on('error', (err) => {
         console.log('Errer occured: ' + err.message);
         retry(title, 0);
     })
-    .pipe(fs.createWriteStream(`./audio/${title}.mp3`), {end: true})
-  });
+    .pipe(fs.createWriteStream(`./audio/${title}.mp3`), {end: true})    
 }
-
-const retry = (title, cnt) => {
-    return new Promise( (resolve, reject) => {
-      if(cnt>30) reject("Error occured: tried over 30 times");
-      ffmpeg(`./video/${title}.mp4`)
-      .toFormat('mp3')
-      .on('progress', (progress) => {
-        console.log('Processing: '+progress.percent+'% done');
-      })
-      .on('end', () => {
-        resolve('on Done');
-        // console.log('Completed');
-        
-      })
-      .on('error', (err) => {
-          console.log('Errer occured: ' + err.message);
-          retry(title, 0);
-      })
-      .pipe(fs.createWriteStream(`./audio/${title}.mp3`), {end: true})
-    });
-}
-
-// promise로 바꾸기 전
-// const crawler = (url ,title) => {
-//     ytdl(url).pipe(fs.createWriteStream(`./video/${title}.mp4`));
-//     ffmpeg(`./video/${title}.mp4`)
-//     .toFormat('mp3')
-//     .on('progress', (progress) => {
-//       console.log('Processing: '+progress.percent+'% done');
-//     })
-//     .on('end', () => {
-//       console.log('Done');
-//       return;
-//     })
-//     .on('error', (err) => {
-//         console.log('Errer occured: ' + err.message);
-//         retry(title, 0);
-//     })
-//     .pipe(fs.createWriteStream(`./audio/${title}.mp3`), {end: true})    
-//     // .save(`./video/${title}.mp3`)
-// }
     
 
-// function retry(title, cnt) {
-//     if(cnt>30) return;
-//     ffmpeg(`./video/${title}.mp4`)
-//         .toFormat('mp3')
-//         .on('progress', (progress) => {
-//           console.log('Processing: '+progress.percent+'% done');
-//         })
-//         .on('end', () => {
-//           console.log('Done');
-//         })
-//         .on('error', (err) => {
-//             console.log('Errer occured: ' + err.message);
-//             retry(title, ++cnt);
-//         })
-//         .pipe(fs.createWriteStream(`./audio/${title}.mp3`), {end: true})    
-//         // .save(`./video/${title}.mp3`)
-// }
+const retry = (title, cnt) => {
+    if(cnt>30) return;
+    ffmpeg(`./video/${title}.mp4`)
+        .toFormat('mp3')
+        .on('progress', (progress) => {
+          console.log('Processing: '+progress.percent+'% done');
+          if(typeof progress.percent == "undefined") retry(title, 0);
+          per.push(progress.percent);
+        })
+        .on('end', () => {
+          console.log('Done!!!');
+          if(Number(per[per.length-1])<99) retry(title, 0);
+        })
+        .on('error', (err) => {
+            console.log('Errer occured: ' + err.message);
+            retry(title, ++cnt);
+        })
+        .pipe(fs.createWriteStream(`./audio/${title}.mp3`), {end: true})    
+}
 
+function checkError(per) {
+  for(let i=per.length-1; i>=per.length-4; i--) {
+    if(per[i]!==per[i-1]) return false;
+  }
+  return true;
+}
 
-module.exports = crawler;
+function checkError2(per, ans) {
+  return per[per.length-1] === ans;
+}
+module.exports = { crawler: crawler, per: per };
