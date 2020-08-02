@@ -1,4 +1,4 @@
-# youtube-mp3-downloader
+# MP3 DOWNLOADER AND PLAYER
 
 * 해당 프로그램은 학습 목적으로 구현하였습니다. 만일 법적으로 문제의 소지가 있을 경우 gksrlfw@gmail.com으로 알려주세요::
 
