@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/playLists.css">
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
     <section id="USER_INPUT">
-        <h1>YOUTUBE DOWNLOADER</h1>
         <input type='checkbox' id='form-switch'>
+        <!-- DOWNLOADER -->
         <form id='login-form' action="" method='post'>
+            <h1 id="project">YOUTUBE DOWNLOADER</h1>
             <input id="url" type="text" placeholder="YOUTUBE VIDEO URL">
             <input id="title" type="text" placeholder="TITLE" >
             <input id="artist" type="text" placeholder="ARTIST" >
@@ -21,25 +23,36 @@
             <textarea id="lyric" class="lyrics" type="text" placeholder="LYRICS" ></textarea>
             <div id="btn_group">
                 <button id="convert" type='submit' class="btn">CONVERT</button>
-                <button id="reset" type='submit' class="btn">RESET</button>
-                <label for='form-switch'><div class="label">FIND LYRICS</div></label>
+                <!-- <button id="reset" type='submit' class="btn">RESET</button> -->
+                <button id="find-auto" type='submit' class="btn">SEARCH</button>
+                <!-- <button id="" type='button' class="btn" onClick="location.href = './play.html'">BACK</button> -->
+                <label for='form-switch'><div class="label">PLAYER</div></label>
             </div>
-            
             <div class="print_log">LOADING</div>
-            <fieldset id="print_log">
-                <!-- <legend>LOADING</legend> -->
-                <!-- <div id="print_log"></div> -->
-            </fieldset>
-            
+            <fieldset id="print_log"></fieldset>
         </form>
-        <form id='register-form' action="" method='post'>
-            <input id="title" type="text" placeholder="TITLE" required>
-            <input id="artist" type="text" placeholder="ARTIST" required>
-            <div id="btn_group" style="margin-bottom: 5px">
-                <button id="find_lyrics" type='submit' class="btn">Find Lyrics</button>
-                <label for='form-switch'><div class="label">BACK</div></label>
+
+        <!-- PLAYER -->
+        <form id='player-form' action="" method='post'>
+            <div class="container">
+                <div class="wrapper">
+                    <h1 id="music-title">Play your favorite music</h1>
+                    <img id="image-title" src="https://i.pinimg.com/originals/b4/75/00/b4750046d94fed05d00dd849aa5f0ab7.jpg">
+                    <input id="range" class="level" type="range" value="0" min="0">
+                    <div class="time"></div>
+                    <div id="btn_group" class="buttons">
+                        <button id="pre" type="button"><img src="./playerImage/Pre.png"></button>
+                        <button id="play" type="button"><img id="play_img" src="./playerImage/play.png"></button>
+                        <button id="next" type="button"><img src="./playerImage/Next.png"></button>
+                    </div>
+                    
+                </div>
+                <div id="btn_group" style="margin-bottom: 5px">
+                    <!-- <button id="find_lyrics" type='submit' class="btn">Find Lyrics</button> -->
+                    <label for='form-switch'><div class="label">DOWNLOADER</div></label>
+                </div>
             </div>
-            <textarea class="lyrics" id="lyric" type="text" placeholder="Lyric what you want to set" required></textarea>
+            <div class="list"></div>
         </form>
     </section> 
 </body>

@@ -1,4 +1,5 @@
-const fs = require('fs')
+// 구글에서는 이미지 크롤링 불가 > 네이버
+const fs = require('fs');
 const request = require('request');
 
 // todo: 비동기 처리

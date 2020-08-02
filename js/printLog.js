@@ -1,5 +1,4 @@
 // print log that is shown what percent completed
-
 const printLog = (percent, title, artist, cnt) => {
     const printLog = document.querySelector('#print_log');
     printLog.scrollTop = printLog.scrollHeight;

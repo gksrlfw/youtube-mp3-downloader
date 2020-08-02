@@ -1,3 +1,4 @@
+// 네이버에서 가져오기
 const puppeteer = require('puppeteer');
 
 const lyricsCrawler = async (title, artist) => {
