@@ -1,10 +1,10 @@
 # MP3 DOWNLOADER AND PLAYER
 
-* 해당 프로그램은 학습 목적으로 구현하였습니다. 만일 법적으로 문제의 소지가 있을 경우 gksrlfw@gmail.com으로 알려주세요::
-
 * 유튜브 동영상을 이용하여 TITLE, ARTIST, ALBUM, LYRICS 등의 기타 메타 데이터를 포함하는 MP3 파일을 다운로드 받는 프로그램입니다.
 
-* NODEJS, ELECTRON을 이용하였습니다.
+* HTML, CSS, JS, ELECTRON을 이용하였습니다.
+
+* 해당 프로그램은 학습 목적으로 구현하였습니다. 만일 법적으로 문제의 소지가 있을 경우 gksrlfw@gmail.com으로 알려주세요::
 
 
 ## 사용법
