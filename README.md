@@ -37,6 +37,6 @@ PLAYER 버튼을 누르면 본인의 AUDIO 폴더안에 있는 MP3 파일들을 
 
 
 ## 참고
-[MP3 플레이어의 소스코드 참고](https://doctorcodetutorial.blogspot.com/2020/04/make-custom-music-player-in-javascript.html)
+[MP3 플레이어 소스코드](https://doctorcodetutorial.blogspot.com/2020/04/make-custom-music-player-in-javascript.html)
 
 
