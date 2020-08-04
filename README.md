@@ -21,6 +21,7 @@ npm start
 
 3. 아래와 같이 본인이 MP3로 변환하길 원하는 동영상의 url을 첨부하고 추가로 작성하고 싶은 기타 정보들을 적어줍니다.
 * title, artist를 작성한 후, SEARCH 버튼을 이용하면 image url을 제외한 정보들이 자동으로 채워집니다. 해당 정보는 google에서 검색하였을 때, 가장 먼저 나오는 동영상과 정보를 이용합니다. (등록되지 않은 노래의 경우, 아무것도 채워주지 않습니다.)
+
 * google의 경우 이미지 크롤링을 할 수 없습니다. 다른 사이트의 image를 이용하여 image url을 적어주세요.
 
 ![3](https://user-images.githubusercontent.com/50065692/89125245-0bac6400-d518-11ea-8a8b-19eef337c15e.PNG)
